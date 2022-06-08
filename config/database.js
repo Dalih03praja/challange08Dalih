@@ -1,3 +1,4 @@
+require("dotenv").config();
 const {
   DB_USER = "postgres",
   DB_PASSWORD = "Praja031100",

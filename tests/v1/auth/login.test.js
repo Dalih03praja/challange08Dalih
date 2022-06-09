@@ -1,16 +1,15 @@
 const request = require("supertest");
 const app = require("../../../app");
-const email = `member${Math.random().toString().substring(12)}@gmail.com`;
 
-describe("POST /v1/auth/register", () => {
+describe("POST /v1/auth/login", () => {
   it("should response with 201 as status code", async () => {
-    const name = "Hello";
+    const email = "member101009@gmail.com";
     const password = "123";
 
     return request(app)
-      .post("/v1/auth/register")
+      .post("/v1/auth/login")
       .set("Content-Type", "application/json")
-      .send({ name, email, password })
+      .send({email, password })
       .then((res) => {
         expect(res.statusCode).toBe(201);
         expect(res.body).toEqual(
@@ -21,17 +20,16 @@ describe("POST /v1/auth/register", () => {
       });
   });
 
-  it("should response with 422 as status code", async () => {
-    const name = "";
+  it("should response with 404 as status code", async () => {
+    const email = "1";
     const password = "";
 
     return request(app)
-      .post("/v1/auth/register")
+      .post("/v1/auth/login")
       .set("Content-Type", "application/json")
-      .send({ name, email, password })
+      .send({email, password})
       .then((res) => {
-        //console.log(res);  //cari tau error dengan ini
-        expect(res.statusCode).toBe(422);
+        expect(res.statusCode).toBe(404);
         expect(res.body).toEqual(
           expect.objectContaining({
             error: {
